@@ -15,7 +15,7 @@ string EnterNum(int i)
 	while (again)
 	{
 		int i = 1;
-		std::cin >> num;
+		cin >> num;
 		ok = (num[0] == '-') || ((num[0] <= '9') && (num[0] >= '0'));	//проверка на наличие минуса или цифр в начале
 		while (ok && i < num.length())
 		{
@@ -43,21 +43,31 @@ int main()
 	one.Print();
 	two.Print();
 
-	answer.Equality(one, two);
+	bool ok = answer.Equality(one, two);
 
 	answer.Addition(one, two);
 	std::cout << "Сумма: ";
 	answer.Print();
 
-	answer.Subtraction(one, two);
-	std::cout << "Разность: ";
-	answer.Print();
-
+	if (!ok)
+	{
+		answer.Subtraction(two, one);
+		std::cout << "Разность: ";
+		std::cout << "-";
+		answer.Print();
+	}
+	else
+	{
+		answer.Subtraction(one, two);
+		std::cout << "Разность: ";
+		answer.Print();
+	}
 	answer.Multiplication(one, two);
 	std::cout << "Произведение: ";
 	answer.Print();
-
+	/*
 	answer.Division(one, two);
 	std::cout << "Частное: ";
 	answer.Print();
+	*/
 }

@@ -4,9 +4,10 @@
 using namespace std;
 
 void LongLong::SetNum(string num)
-{
-	high = static_cast<int32_t>(atol(num.c_str()) & 0xFFFFFFFF00000000LL >> 32);
-	low = static_cast<uint32_t>(atol(num.c_str()) & 0xFFFFFFFFLL);
+{																									
+	cout << atoll(num.c_str()) << endl;
+	high = static_cast<int32_t> (((atoll(num.c_str())) & 0xFFFFFFFF00000000LL) >> 32);
+	low = static_cast<uint32_t>((atoll(num.c_str())) & 0xFFFFFFFFLL);
 }
 
 int32_t LongLong::GetHigh()
@@ -31,57 +32,60 @@ void LongLong::SetLow(uint32_t n)
 
 void LongLong::Print()
 {
-	long long n = static_cast<long long>(high) << 64| low;
+	long long n = (static_cast<long long>(high) << 32) | low;
 	std::cout << n << "\n";
 }
 
 ////////////////////////
 
-void LongLong::Equality(class LongLong a, class LongLong b) 				//сравнение
+bool LongLong::Equality(class LongLong a, class LongLong b) 				//сравнение
 {
 	bool ok = (a.high == b.high) && (a.low == b.low);
 	if (ok)
 	{
 		std::cout << "„исла равны" << "\n";
+		return true;
 	}
 	else
 	{
 		if (a.high > b.high)
 		{
 			std::cout << "ѕервое число больше" << endl;
+			return true;
 		}
 		else
 		{
 			if (a.high < b.high)
 			{
 				std::cout << "ѕервое число меньше" << endl;
+				return false;
 			}
 			else
 				if (a.low > b.low)
 				{
 					std::cout << "ѕервое число больше" << endl;
+					return true;
 				}
 				else
 					std::cout << "ѕервое число меньше" << endl;
+			return false;
 		}
 	}
 	}
 
 void LongLong::Multiplication(class LongLong a, class LongLong b)					//произведение
 {
-	int32_t interim_high = 0;
-	long overflow;
+	long long overflow;
 
 	overflow = a.low * b.low;
-	interim_high = static_cast<int32_t>(overflow & 0xFFFFFFFF00000000LL >> 32);				//младша€ х младша€
+	high = static_cast<int32_t>((overflow & 0xFFFFFFFF00000000LL) >> 32);			//младша€ х младша€
 	low = static_cast<uint32_t>(overflow & 0xFFFFFFFFLL);
 	
-	interim_high += (a.high * b.low) & 0xFFFFFFFFLL;								//старша€€ х младша€ накрест
+	high += (a.high * b.low) & 0xFFFFFFFFLL;										//старша€€ х младша€ накрест
 														
 	high = (a.low * b.high) & 0xFFFFFFFFLL;											//младша€ х старша€ накрест
 
 	high += (a.high * b.high) << 32;												// старша€ х старша€
-	high += interim_high;
 }
 
 void LongLong::Division(class LongLong a, class LongLong b)							//частное
@@ -89,7 +93,7 @@ void LongLong::Division(class LongLong a, class LongLong b)							//частное
 
 }
 
-void LongLong::Addition(class LongLong a, class LongLong b)				//сумма
+void LongLong::Addition(class LongLong a, class LongLong b)							//сумма
 {
 	bool overflow = (0xFFFFFFFFLL - a.low) <= b.low;
 	if (overflow)

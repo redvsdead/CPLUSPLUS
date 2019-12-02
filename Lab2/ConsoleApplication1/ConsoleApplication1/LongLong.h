@@ -20,7 +20,7 @@ public:
 	void Print();				//печать на экран
 
 	////////////////// АРИФМЕТИЧЕСКИЕ ОПЕРАЦИИ
-	void Equality(class LongLong a, class LongLong b);				//сравнение
+	bool Equality(class LongLong a, class LongLong b);				//сравнение
 	void Multiplication(class LongLong a, class LongLong b);		//произведение
 	void Division(class LongLong a, class LongLong b);				//частное
 	void Addition(class LongLong a, class LongLong b);				//сумма
