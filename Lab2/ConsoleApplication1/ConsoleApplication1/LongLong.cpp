@@ -4,10 +4,17 @@
 using namespace std;
 
 void LongLong::SetNum(string num)
-{																									
-	cout << atoll(num.c_str()) << endl;
-	high = static_cast<int32_t> (((atoll(num.c_str())) & 0xFFFFFFFF00000000LL) >> 32);
-	low = static_cast<uint32_t>((atoll(num.c_str())) & 0xFFFFFFFFLL);
+{				
+	if ((atoll(num.c_str()) >= 0) && ((atoll(num.c_str()) <= 0xFFFFFFFFLL)))
+	{
+		high = static_cast<int32_t> (((atoll(num.c_str())) & 0xFFFFFFFF00000000LL) >> 32);
+		low = static_cast<uint32_t>((atoll(num.c_str())) & 0xFFFFFFFFLL);
+	}
+	else
+	{
+		high = 0xFFFFFFFFFLL;
+		low = -1*(atoll(num.c_str()));
+	}
 }
 
 int32_t LongLong::GetHigh()
@@ -32,7 +39,17 @@ void LongLong::SetLow(uint32_t n)
 
 void LongLong::Print()
 {
-	long long n = (static_cast<long long>(high) << 32) | low;
+	long long n;
+	if (high == -4294967295)
+	{
+		n = -1 * low;
+		std::cout << "пау" << endl;
+	}
+	else
+	{
+		n = (static_cast<long long>(high) << 32) | low;
+		std::cout << "пиу" << endl;
+	}
 	std::cout << n << "\n";
 }
 
@@ -110,14 +127,24 @@ void LongLong::Addition(class LongLong a, class LongLong b)							//сумма
 
 void LongLong::Subtraction(class LongLong a, class LongLong b)			//разность
 {
-	high = a.high - b.high;
+	//high = a.high - b.high;
 	if (a.low < b.low)
 	{
 		
 		low = a.low << 32 - b.low;
+		a.high >> 32;
 	}
 	else
 	{
 		low = a.low - b.low;
+	}
+	if (a.high < b.high)
+	{
+
+		high = a.high << 32 - b.high;
+	}
+	else
+	{
+		high = a.high - b.high;
 	}
 }

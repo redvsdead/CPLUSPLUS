@@ -49,7 +49,7 @@ int main()
 	std::cout << "Сумма: ";
 	answer.Print();
 
-	if (!ok)
+	/*if (!ok)
 	{
 		answer.Subtraction(two, one);
 		std::cout << "Разность: ";
@@ -57,11 +57,11 @@ int main()
 		answer.Print();
 	}
 	else
-	{
+	{*/
 		answer.Subtraction(one, two);
 		std::cout << "Разность: ";
 		answer.Print();
-	}
+	//}
 	answer.Multiplication(one, two);
 	std::cout << "Произведение: ";
 	answer.Print();
