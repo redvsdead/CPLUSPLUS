@@ -40,15 +40,14 @@ void LongLong::SetLow(uint32_t n)
 void LongLong::Print()
 {
 	long long n;
-	if (high == -4294967295)
+	if (high == 4294967295)
 	{
-		n = -1 * low;
-		std::cout << "пау" << endl;
+		n = low;
+		n = n * (-1);
 	}
 	else
 	{
 		n = (static_cast<long long>(high) << 32) | low;
-		std::cout << "пиу" << endl;
 	}
 	std::cout << n << "\n";
 }
@@ -127,7 +126,7 @@ void LongLong::Addition(class LongLong a, class LongLong b)							//сумма
 
 void LongLong::Subtraction(class LongLong a, class LongLong b)			//разность
 {
-	//high = a.high - b.high;
+	high = a.high - b.high;
 	if (a.low < b.low)
 	{
 		
@@ -138,13 +137,5 @@ void LongLong::Subtraction(class LongLong a, class LongLong b)			//разность
 	{
 		low = a.low - b.low;
 	}
-	if (a.high < b.high)
-	{
 
-		high = a.high << 32 - b.high;
-	}
-	else
-	{
-		high = a.high - b.high;
-	}
 }

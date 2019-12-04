@@ -58,9 +58,9 @@ int main()
 	}
 	else
 	{*/
-		answer.Subtraction(one, two);
-		std::cout << "Разность: ";
-		answer.Print();
+	answer.Subtraction(one, two);
+	std::cout << "Разность: ";
+	answer.Print();
 	//}
 	answer.Multiplication(one, two);
 	std::cout << "Произведение: ";
