@@ -12,8 +12,8 @@ void LongLong::SetNum(string num)
 	}
 	else
 	{
-		high = 0xFFFFFFFFFLL;
-		low = -1*(atoll(num.c_str()));
+		high = 0xFFFFFFFF;
+		low = 0xFFFFFFFF-(atoll(num.c_str())) + 2;
 	}
 }
 
@@ -40,10 +40,10 @@ void LongLong::SetLow(uint32_t n)
 void LongLong::Print()
 {
 	long long n;
-	if (high == 4294967295)
+	if (high == 0xFFFFFFFF)
 	{
-		n = low;
-		n = n * (-1);
+		n = 0xFFFFFFFF + low;
+		n = n;
 	}
 	else
 	{
