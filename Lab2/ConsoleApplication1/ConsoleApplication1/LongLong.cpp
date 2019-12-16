@@ -13,7 +13,7 @@ void LongLong::SetNum(string num)
 	else
 	{
 		high = 0xFFFFFFFF;
-		low = 0xFFFFFFFF-(atoll(num.c_str())) + 2;
+		low = 0xFFFFFFFF - (atoll(num.c_str())) + 1;
 	}
 }
 
@@ -42,8 +42,8 @@ void LongLong::Print()
 	long long n;
 	if (high == 0xFFFFFFFF)
 	{
-		n = 0xFFFFFFFF + low;
-		n = n;
+		n = 0xFFFFFFFF + low + 1;
+		n = n * (-1);
 	}
 	else
 	{
@@ -92,16 +92,24 @@ bool LongLong::Equality(class LongLong a, class LongLong b) 				//сравнение
 void LongLong::Multiplication(class LongLong a, class LongLong b)					//произведение
 {
 	long long overflow;
+	if (!(a.high == 0xFFFFFFFF && b.high == 0xFFFFFFFF)) 
+	{
 
-	overflow = a.low * b.low;
-	high = static_cast<int32_t>((overflow & 0xFFFFFFFF00000000LL) >> 32);			//младша€ х младша€
-	low = static_cast<uint32_t>(overflow & 0xFFFFFFFFLL);
-	
-	high += (a.high * b.low) & 0xFFFFFFFFLL;										//старша€€ х младша€ накрест
-														
-	high = (a.low * b.high) & 0xFFFFFFFFLL;											//младша€ х старша€ накрест
+		overflow = a.low * b.low;
+		high = static_cast<int32_t>((overflow & 0xFFFFFFFF00000000LL) >> 32);			//младша€ х младша€
+		low = static_cast<uint32_t>(overflow & 0xFFFFFFFFLL);
 
-	high += (a.high * b.high) << 32;												// старша€ х старша€
+		high += (a.high * b.low) & 0xFFFFFFFFLL;										//старша€€ х младша€ накрест
+
+		high = (a.low * b.high) & 0xFFFFFFFFLL;											//младша€ х старша€ накрест
+
+		high += (a.high * b.high) << 32;												// старша€ х старша€
+	}
+	else
+	{
+		high = ((a.low * b.low) & 0xFFFFFFFF00000000LL) >> 32;
+		low = (a.low * b.low) & 0xFFFFFFFFLL;
+	}
 }
 
 void LongLong::Division(class LongLong a, class LongLong b)							//частное
@@ -111,31 +119,54 @@ void LongLong::Division(class LongLong a, class LongLong b)							//частное
 
 void LongLong::Addition(class LongLong a, class LongLong b)							//сумма
 {
-	bool overflow = (0xFFFFFFFFLL - a.low) <= b.low;
-	if (overflow)
+	if (!(a.high == 0xFFFFFFFF && b.high == 0xFFFFFFFF))
 	{
-		low = a.low - 0xFFFFFFFFLL+ 1 + b.low;
-		high++;
+		bool overflow = (0xFFFFFFFFLL - a.low) <= b.low;
+		if (overflow)
+		{
+			low = a.low - 0xFFFFFFFFLL + 1 + b.low;
+			high++;
+		}
+		else
+		{
+			low = a.low + b.low;
+		}
+		high = a.high + b.high;
 	}
 	else
 	{
+		high = 0xFFFFFFFF;
 		low = a.low + b.low;
 	}
-	high = a.high + b.high;
 }
 
 void LongLong::Subtraction(class LongLong a, class LongLong b)			//разность
 {
-	high = a.high - b.high;
-	if (a.low < b.low)
+	if (!(a.high == 0xFFFFFFFF && b.high == 0xFFFFFFFF))
 	{
-		
-		low = a.low << 32 - b.low;
-		a.high >> 32;
+		high = a.high - b.high;
+		if (a.low < b.low)
+		{
+
+			low = a.low << 32 - b.low;
+			a.high >> 32;
+		}
+		else
+		{
+			low = a.low - b.low;
+		}
 	}
 	else
 	{
-		low = a.low - b.low;
+		if (a.low < b.low)
+		{
+			high = 0;
+			low = b.low - a.low;
+		}
+		else
+		{
+			high = 0xFFFFFFFF;
+			low = a.low - b.low;
+		}
 	}
-
 }
