@@ -5,16 +5,17 @@ using namespace std;
 
 void LongLong::SetNum(string num)
 {				
-	if ((atoll(num.c_str()) >= 0) && ((atoll(num.c_str()) <= 0xFFFFFFFFLL)))
+	//if ((atoll(num.c_str()) >= 0) && ((atoll(num.c_str()) <= 0xFFFFFFFFLL)))
 	{
 		high = static_cast<int32_t> (((atoll(num.c_str())) & 0xFFFFFFFF00000000LL) >> 32);
 		low = static_cast<uint32_t>((atoll(num.c_str())) & 0xFFFFFFFFLL);
 	}
-	else
+	/*else
 	{
 		high = 0xFFFFFFFF;
-		low = 0xFFFFFFFF - (atoll(num.c_str())) + 1;
-	}
+		low = 0xFFFFFFFF - ((atoll(num.c_str())) & 0xFFFFFFFFLL) + 1;
+	}*/
+	std::cout << 0xFFFFFFFF - 5 << endl << low << endl;
 }
 
 int32_t LongLong::GetHigh()
@@ -40,12 +41,12 @@ void LongLong::SetLow(uint32_t n)
 void LongLong::Print()
 {
 	long long n;
-	if (high == 0xFFFFFFFF)
+	/*if (high == 0xFFFFFFFF)
 	{
 		n = 0xFFFFFFFF + low + 1;
 		n = n * (-1);
 	}
-	else
+	else*/
 	{
 		n = (static_cast<long long>(high) << 32) | low;
 	}
@@ -92,7 +93,7 @@ bool LongLong::Equality(class LongLong a, class LongLong b) 				//сравнение
 void LongLong::Multiplication(class LongLong a, class LongLong b)					//произведение
 {
 	long long overflow;
-	if (!(a.high == 0xFFFFFFFF && b.high == 0xFFFFFFFF)) 
+	//if (!(a.high == 0xFFFFFFFF && b.high == 0xFFFFFFFF)) 
 	{
 
 		overflow = a.low * b.low;
@@ -105,11 +106,11 @@ void LongLong::Multiplication(class LongLong a, class LongLong b)					//произвед
 
 		high += (a.high * b.high) << 32;												// старшая х старшая
 	}
-	else
+	/*else
 	{
 		high = ((a.low * b.low) & 0xFFFFFFFF00000000LL) >> 32;
 		low = (a.low * b.low) & 0xFFFFFFFFLL;
-	}
+	}*/
 }
 
 void LongLong::Division(class LongLong a, class LongLong b)							//частное
@@ -119,7 +120,8 @@ void LongLong::Division(class LongLong a, class LongLong b)							//частное
 
 void LongLong::Addition(class LongLong a, class LongLong b)							//сумма
 {
-	if (!(a.high == 0xFFFFFFFF && b.high == 0xFFFFFFFF))
+	high = 0;
+	//if (!(a.high == 0xFFFFFFFF && b.high == 0xFFFFFFFF))
 	{
 		bool overflow = (0xFFFFFFFFLL - a.low) <= b.low;
 		if (overflow)
@@ -133,16 +135,16 @@ void LongLong::Addition(class LongLong a, class LongLong b)							//сумма
 		}
 		high = a.high + b.high;
 	}
-	else
+	/*else
 	{
 		high = 0xFFFFFFFF;
 		low = a.low + b.low;
-	}
+	}*/
 }
 
 void LongLong::Subtraction(class LongLong a, class LongLong b)			//разность
 {
-	if (!(a.high == 0xFFFFFFFF && b.high == 0xFFFFFFFF))
+	//if (!(a.high == 0xFFFFFFFF && b.high == 0xFFFFFFFF))
 	{
 		high = a.high - b.high;
 		if (a.low < b.low)
@@ -156,7 +158,7 @@ void LongLong::Subtraction(class LongLong a, class LongLong b)			//разность
 			low = a.low - b.low;
 		}
 	}
-	else
+	/*else
 	{
 		if (a.low < b.low)
 		{
@@ -168,5 +170,6 @@ void LongLong::Subtraction(class LongLong a, class LongLong b)			//разность
 			high = 0xFFFFFFFF;
 			low = a.low - b.low;
 		}
-	}
+	}*/
+
 }
