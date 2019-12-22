@@ -52,7 +52,7 @@ int main()
 
 
 
-	one.SetNum("-2");
+	one.SetNum("-2"); 
 	assert(one.low == 0xFFFFFFFE);
 	assert(one.high == 0xFFFFFFFF);
 
