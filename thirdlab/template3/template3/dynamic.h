@@ -52,6 +52,7 @@ void dynamic<T>::push_tail(T value)
 	if (maxs == size)
 	{
 		T *buf = new T[maxs*2];
+		maxs = maxs * 2;
 		this->size = this->size++;
 		for (int i = 0; i < this->size - 1; i++)
 			buf[i] = this->mas[i];
@@ -73,6 +74,7 @@ void dynamic<T>::push_head(T value)
 	{
 		this->size = this->size++;
 		T *buf = new T[maxs*2];
+		maxs = maxs * 2;
 		buf[0] = value;
 		for (int i = 0; i < this->size - 1; i++)
 		{
@@ -98,8 +100,8 @@ void dynamic<T>::delete_tail()
 	if (size * 2 <= maxs)
 	{
 		this->size = this->size--;
-		int new_s = static_cast<int>(maxs / 2);
-		T *buf = new T[new_s];
+		maxs = static_cast<int>(maxs / 2);
+		T *buf = new T[maxs];
 		for (int i = 0; i < this->size; i++)
 		{
 			buf[i] = this->mas[i];
@@ -123,8 +125,8 @@ void dynamic<T>::delete_head()
 	if (size * 2 <= maxs)
 	{
 		this->size = this->size--;
-		int new_s = static_cast<int>(maxs / 2);
-		T *buf = new T[new_s];
+		maxs = static_cast<int>(maxs / 2);
+		T *buf = new T[maxs];
 		for (int i = 0; i < this->size; i++)
 		{
 			buf[i] = this->mas[i + 1];
