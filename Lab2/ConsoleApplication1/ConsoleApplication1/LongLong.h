@@ -6,10 +6,11 @@ using namespace std;
 
 class LongLong
 {
+public:
 	int32_t high;
 	uint32_t low;
 
-public:
+
 
 	////////////////// ВСПОМОГАТЕЛЬНОЕ
 	void SetNum(string num);	//сеттер для старшей/младшей частей

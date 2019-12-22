@@ -35,11 +35,46 @@ string EnterNum(int i)
 
 int main()
 {
+
+
+
 	setlocale(LC_ALL, "Russian");
 	LongLong one, two, answer;
+
+	one.SetNum("1");
+	assert(one.low == 1);
+	assert(one.high == 0);
+
+
+	one.SetNum("-1");
+	assert(one.low == 0xFFFFFFFF);
+	assert(one.high == 0xFFFFFFFF);
+
+
+
+	one.SetNum("-2");
+	assert(one.low == 0xFFFFFFFE);
+	assert(one.high == 0xFFFFFFFF);
+
+
+	one.SetNum("+???100000000????");
+	assert(one.low == 0);
+	assert(one.high == 1);
+
+
+	one.SetNum("-??????1");
+	assert(one.low == 0xFFFFFFFF);
+	assert(one.high == 0xFFFFFFFF);
+
+
+
+	one.SetNum("-??????2");
+	assert(one.low == 0xFFFFFFFE);
+	assert(one.high == 0xFFFFFFFF);
+
 	one.SetNum(EnterNum(1));
 	two.SetNum(EnterNum(2));
-	std::cout << "\n";
+	std::cout << std::hex << "\n";
 	one.Print();
 	two.Print();
 
