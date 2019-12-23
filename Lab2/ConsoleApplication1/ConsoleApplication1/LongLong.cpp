@@ -75,25 +75,16 @@ bool LongLong::Equality(class LongLong a, class LongLong b) 				//сравнение
 
 void LongLong::Multiplication(class LongLong a, class LongLong b)						//произведение
 {
-	/*long long overflow;
-	if (!(a.high == 0xFFFFFFFF && b.high == 0xFFFFFFFF)) 
+	high = 0;
+	int32_t overf = (int32_t)(((static_cast<long long>(a.low) * static_cast<long long>(b.low)) & 0xFFFFFFFF00000000LL) >> 32);
+	low = (a.low * b.low) & 0xFFFFFFFFLL;
+	high += overf;
+	high += a.low * b.high;
+	high += a.high * b.low;
+	if (a.high > 0 || b.high > 0)
 	{
-
-		overflow = a.low * b.low;
-		high = static_cast<int32_t>((overflow & 0xFFFFFFFF00000000LL) >> 32);			//младша€ х младша€
-		low = static_cast<uint32_t>(overflow & 0xFFFFFFFFLL);
-
-		high += (a.high * b.low) & 0xFFFFFFFFLL;										//старша€€ х младша€ накрест
-
-		high = (a.low * b.high) & 0xFFFFFFFFLL;											//младша€ х старша€ накрест
-
-		high += (a.high * b.high) << 32;												// старша€ х старша€
+		high += a.high * b.high << 32;
 	}
-	else
-	{
-		high = ((a.low * b.low) & 0xFFFFFFFF00000000LL) >> 32;
-		low = (a.low * b.low) & 0xFFFFFFFFLL;
-	}*/
 }
 
 void LongLong::Division(class LongLong a, class LongLong b)							//частное
@@ -114,5 +105,11 @@ void LongLong::Addition(class LongLong a, class LongLong b)							//сумма
 
 void LongLong::Subtraction(class LongLong a, class LongLong b)			//разность
 {
-	
+	bool overf = a.low < b.low;
+	low = a.low - b.low;
+	high = a.high - b.high;
+	if (overf)
+	{
+		high--;
+	}
 }
