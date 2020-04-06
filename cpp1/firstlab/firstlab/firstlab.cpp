@@ -4,7 +4,8 @@
 #include <locale.h>
 #include <direct.h>
 #include <ctime>
-#include <fstream>
+#include <fstream>   
+
 
 /*В матрице найти наибольшее количество подряд идущих нулей по горизнтали, вертикали и диагонали*/
 
